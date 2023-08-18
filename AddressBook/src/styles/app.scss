@@ -1,0 +1,89 @@
+@import "variables";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: normal;
+
+    a{
+        @extend .text-decoration-none;
+    }
+
+    .main-heading {
+        font-family: $cen-gothic;
+        font-size: 20px;
+    }
+
+    .side-heading {
+        font-family: $cen-gothic;
+        font-size: 26px;
+        font-weight: 600;
+    }
+
+    #error {
+        font-size: 18px;
+    }
+
+    textarea {
+        overflow-y: scroll;
+    }    
+
+    .mr-20{
+        margin-right: 20px;
+    }
+
+    .close{
+        background: none;
+        border: 0;
+        font-size: 24px;
+        float: right;    
+    }
+
+    body {
+
+        .company-name {
+            background-color: $blue;
+
+            h1 {
+                font-family: $cen-gothic;
+            }
+        }
+
+        .navbar {
+            .nav-link {                
+                a {
+                    @extend .text-white, .text-decoration-none;
+                    font-weight: bold;
+                }
+
+                &:hover {
+                    background-color: $yellow;
+                }
+
+                &.active {
+                    background-color: $yellow;                    
+                    border-left: 6px solid $white;
+                    
+                    a{
+                        color: $black;
+                    }
+                }
+            }
+        }
+
+        .container {
+            width: fit-content;
+            font-family: $cali;
+
+            .contact-list{
+                div{
+                    color:$black-100;
+                    &.active{
+                        background-color: $hover;
+                    }
+                }
+            }
+        }
+    }
+}

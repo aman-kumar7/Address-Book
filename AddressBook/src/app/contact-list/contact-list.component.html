@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="text-justify mt-4 mb-2 col-sm-4">
+        <h5 class="mb-2 font-weight-bolder side-heading">CONTACTS</h5>
+        <div class="contact-list mr-0">
+            <div class="border p-2" routerLinkActive="active" *ngFor="let contact of contactList" [routerLink]="['detail', contact.id]">
+                <!--(click)="contactDetails(event)"-->
+    
+                <h2 class="mb-1  font-weight-lighter">{{contact.name}}</h2>
+                <p class="mb-0 ">{{contact.email}}</p>
+                <p class="mb-1 ">{{contact.mobile}}</p>
+    
+            </div>
+        </div>
+    </div>
+    <div class="my-4 col-sm-8 p-4 ml-5">
+        <router-outlet></router-outlet>
+    </div>
+</div>
