@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalRef} from 'ngx-bootstrap/modal'
 
 import { ContactService } from '../../service';
 import { Contact } from '../../model';
@@ -11,54 +12,62 @@ import { Contact } from '../../model';
 })
 export class ContactFormComponent implements OnInit {
   addContactForm!: FormGroup;
-  id: number = 0;
+  contactDetail!: Contact;
+  public onSave: any;
+  contactId!: number;
 
-  constructor(private contactService: ContactService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private contactService: ContactService, 
+    private activatedRoute: ActivatedRoute, 
+    private router: Router,
+    private modalRef: BsModalRef
+    ) {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      this.id = params.id;
-    });
+    // this.activatedRoute.params.subscribe((params) => {
+    //   this.id = params.id;
+    // });
 
-    if (this.id > 0) {
-      this.contactService.getContactById(this.id).subscribe(result => {
-        this.buildContactForm(new Contact(result));
-      });
-    }
-    else {
-      this.buildContactForm(new Contact({}));
-    }
+    // if (this.id > 0) {
+    //   this.contactService.getContactById(this.id).subscribe(result => {
+    //     this.buildContactForm(new Contact(result));
+    //   });
+    // }
+    //else {
+      this.buildContactForm();
+    //}
   }
 
-  buildContactForm(contactDetail: Contact) {
+  buildContactForm() {
     this.addContactForm = new FormGroup({
-      name: new FormControl(contactDetail.name, Validators.required),
-      email: new FormControl(contactDetail.email, [Validators.required, Validators.email]),
-      mobile: new FormControl(contactDetail.mobile, [Validators.required, Validators.pattern(/^[9876]\d{9}$/)]),
-      landline: new FormControl(contactDetail.landline),
-      website: new FormControl(contactDetail.website),
-      address: new FormControl(contactDetail.address)
+      name: new FormControl(this.contactDetail?.name ?? '', Validators.required),
+      email: new FormControl(this.contactDetail?.email ?? '', [Validators.required, Validators.email]),
+      mobile: new FormControl(this.contactDetail?.mobile ?? '', [Validators.required, Validators.pattern(/^[9876]\d{9}$/)]),
+      landline: new FormControl(this.contactDetail?.landline ?? ''),
+      website: new FormControl(this.contactDetail?.website ?? ''),
+      address: new FormControl(this.contactDetail?.address ?? '')
     });
   }
 
   addContactDetail() {
     if (this.addContactForm.valid) {
       let contact = new Contact(this.addContactForm.value);
-      if (this.id == 0) {
-        this.contactService.addContact(contact).subscribe(() => { });
-      }
-      this.resetContactForm();     
+      this.contactService.addContact(contact).subscribe(() => {
+        this.resetContactForm();
+        this.closeModal();
+        this.onSave(true);
+      });
     }
   }
 
   updateContactDetail() {
     if (this.addContactForm.valid) {
       let contact = new Contact(this.addContactForm.value);
-      if (this.id > 0) {
-        this.contactService.updateContact(this.id, contact).subscribe(() => { });
-      }
-      this.resetContactForm();
+        this.contactService.updateContact(this.contactId, contact).subscribe((data) => {
+          this.resetContactForm();
+          this.closeModal();
+          this.onSave(data);
+         });
     }
   }
 
@@ -69,6 +78,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   closeModal() {
-    this.router.navigate([`contact`]);
+    this.modalRef.hide();
+    //this.router.navigate([`contact`]);
   }
 }

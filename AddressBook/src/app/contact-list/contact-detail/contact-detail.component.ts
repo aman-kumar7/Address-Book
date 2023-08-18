@@ -27,9 +27,4 @@ export class ContactDetailComponent implements OnInit {
             this.contactDetail = result;
         });
     }
-
-    deleteContactDetail(id: number) {
-        this.contactService.deleteContact(id).subscribe(() => {
-        });
-    }
 }

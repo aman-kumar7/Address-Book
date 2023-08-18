@@ -1,0 +1,94 @@
+.toast-container {
+    top: 50px;
+  
+    .ngx-toastr {
+      width: 410px;
+      background-color: $white;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3);
+  
+      @extend .p-0;
+      @extend .d-flex;
+      @extend .bg-primary;
+  
+      .toastr-icon {
+        @extend .p-12;
+  
+        .icon {
+          color: $white;
+        }
+      }
+  
+      .toastr-details {
+        @extend .p-12;
+        @extend .w-100;
+        @extend .text-primary;
+      }
+  
+      .icon-click {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+      }
+  
+      &.success {
+        .toastr-icon {
+          background-color: $green-500;
+        }
+  
+        .ic-info {
+          @extend .d-inline-flex;
+        }
+  
+        .title {
+          color: $green-500;
+        }
+      }
+  
+      &.warning {
+        .toastr-icon {
+          background-color: $orange-500;
+        }
+  
+        .ic-error {
+          @extend .d-inline-flex;
+        }
+  
+        .title {
+          color: $orange-500;
+        }
+      }
+  
+      &.error {
+        .toastr-icon {
+          background-color: $coral-red-500;
+        }
+  
+        .ic-cancel {
+          @extend .d-inline-flex;
+        }
+  
+        .title {
+          color: $coral-red-500;
+        }
+      }
+  
+      &.info {
+        .toastr-icon {
+          background-color: $blue-500;
+        }
+  
+        .ic-info {
+          @extend .d-inline-flex;
+        }
+  
+        .title {
+          color: $blue-500;
+        }
+      }
+  
+      &:hover {
+        box-shadow: 0 0 12px rgba(0, 0, 0, .6) !important;
+      }
+    }
+  }
+  
