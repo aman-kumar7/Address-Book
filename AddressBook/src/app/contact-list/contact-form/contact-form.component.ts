@@ -5,7 +5,7 @@ import { BsModalRef} from 'ngx-bootstrap/modal'
 
 import { ContactService } from '../../service';
 import { Contact } from '../../model';
-import { NotificationService } from 'src/app/shared';
+import { NotificationService } from '../../shared';
 
 @Component({
   selector: 'app-contact-form',
