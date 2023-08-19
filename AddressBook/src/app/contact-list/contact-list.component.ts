@@ -31,8 +31,10 @@ export class ContactListComponent implements OnInit {
 
     getContactDetailList() {
         this.contactService.getContactList().subscribe(result => {
-            this.contactList = result;
+            if(result){
+                this.contactList = result;
             this.filteredContactList = result;
+            }
 
             if (this.contactList.length > 0) {
                 if (!this.route.firstChild) {

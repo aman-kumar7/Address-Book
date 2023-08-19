@@ -8,7 +8,8 @@ import { Contact } from '../model';
   providedIn: 'root'
 })
 export class ContactService {
-  url = 'http://localhost:8000/contacts';
+  url = 'https://my-json-server.typicode.com/aman-kumar7/addressbook-json';
+
   private contactFormSubmitted = new Subject<any>();
   isContactListChanged = this.contactFormSubmitted.asObservable();
 
@@ -19,7 +20,7 @@ export class ContactService {
   }
 
   getContactList(): Observable<any> {
-    return this.http.get(this.url)
+    return this.http.get(`${this.url}/contacts`)
   }
   
   contactFormChanged() {
@@ -27,18 +28,18 @@ export class ContactService {
   }
 
   addContact(data: any) {    
-    return this.http.post(this.url, data);
+    return this.http.post(`${this.url}/contacts/`, data);
   }
  
   getContactById(id: number): Observable<any> {   
-    return this.http.get(`${this.url}/${id}`)
+    return this.http.get(`${this.url}/contacts/${id}`)
   }
 
   deleteContact(id: number) {
-    return this.http.delete(`${this.url}/${id}`)
+    return this.http.delete(`${this.url}/contacts/${id}`)
   }
   
   updateContact(id: number, data: Contact) {
-    return this.http.put(`${this.url}/${id}`, data)
+    return this.http.put(`${this.url}/contacts/${id}`, data)
   }
 }
