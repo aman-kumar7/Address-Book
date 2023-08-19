@@ -1,5 +1,6 @@
 .toast-container {
     top: 50px;
+    right: 10px;
   
     .ngx-toastr {
       width: 410px;
@@ -11,23 +12,23 @@
       @extend .bg-primary;
   
       .toastr-icon {
-        @extend .p-12;
-  
-        .icon {
-          color: $white;
+        padding: 12px;  
+        .bi {
+          color: $white !important;
+          font-size: 20px;
         }
       }
-  
-      .toastr-details {
-        @extend .p-12;
-        @extend .w-100;
-        @extend .text-primary;
-      }
-  
+
       .icon-click {
         position: absolute;
         top: 12px;
         right: 12px;
+      }
+  
+      .toastr-details {
+        padding: 12px;
+        @extend .w-100;
+        background: $white;
       }
   
       &.success {
@@ -35,7 +36,7 @@
           background-color: $green-500;
         }
   
-        .ic-info {
+        .bi-check-circle {
           @extend .d-inline-flex;
         }
   
@@ -49,7 +50,7 @@
           background-color: $orange-500;
         }
   
-        .ic-error {
+        .bi-exclamation-circle {
           @extend .d-inline-flex;
         }
   
@@ -63,7 +64,7 @@
           background-color: $coral-red-500;
         }
   
-        .ic-cancel {
+        .bi-x-cancel {
           @extend .d-inline-flex;
         }
   
@@ -77,7 +78,7 @@
           background-color: $blue-500;
         }
   
-        .ic-info {
+        .bi-info-circle {
           @extend .d-inline-flex;
         }
   

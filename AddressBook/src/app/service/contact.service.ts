@@ -10,9 +10,13 @@ import { Contact } from '../model';
 export class ContactService {
   url = 'http://localhost:8000/contacts';
   private contactFormSubmitted = new Subject<any>();
-  isContactFormChanged = this.contactFormSubmitted.asObservable();
+  isContactListChanged = this.contactFormSubmitted.asObservable();
 
   constructor(private http: HttpClient) { }
+
+  contactListUpdated(){
+    this.contactFormSubmitted.next();
+  }
 
   getContactList(): Observable<any> {
     return this.http.get(this.url)

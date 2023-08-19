@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef} from 'ngx-bootstrap/modal'
 
 import { ContactService } from '../../service';
 import { Contact } from '../../model';
+import { NotificationService } from 'src/app/shared';
 
 @Component({
   selector: 'app-contact-form',
@@ -15,11 +16,13 @@ export class ContactFormComponent implements OnInit {
   contactDetail!: Contact;
   public onSave: any;
   contactId!: number;
+  contactList: any;
 
   constructor(private contactService: ContactService, 
     private activatedRoute: ActivatedRoute, 
     private router: Router,
-    private modalRef: BsModalRef
+    private modalRef: BsModalRef,
+    private notificationService: NotificationService
     ) {
   }
 
@@ -34,28 +37,39 @@ export class ContactFormComponent implements OnInit {
     //   });
     // }
     //else {
-      this.buildContactForm();
+      this.getContactList();      
     //}
+  }
+
+  getContactList(){
+    this.contactService.getContactList().subscribe(result => {
+      this.contactList = result;
+      this.buildContactForm();
+  });
   }
 
   buildContactForm() {
     this.addContactForm = new FormGroup({
-      name: new FormControl(this.contactDetail?.name ?? '', Validators.required),
-      email: new FormControl(this.contactDetail?.email ?? '', [Validators.required, Validators.email]),
-      mobile: new FormControl(this.contactDetail?.mobile ?? '', [Validators.required, Validators.pattern(/^[9876]\d{9}$/)]),
-      landline: new FormControl(this.contactDetail?.landline ?? ''),
+      firstname: new FormControl(this.contactDetail?.firstname ?? '', Validators.required),
+      lastname: new FormControl(this.contactDetail?.lastname ?? '', Validators.required),
+      email: new FormControl(this.contactDetail?.email ?? '', [Validators.required, Validators.email, this.isEmailUnique.bind(this)]),
+      mobile: new FormControl(this.contactDetail?.mobile ?? '', [Validators.required, Validators.pattern(/^[9876]\d{9}$/), this.isPhoneNumberUnique.bind(this)]),
       website: new FormControl(this.contactDetail?.website ?? ''),
-      address: new FormControl(this.contactDetail?.address ?? '')
+      address: new FormControl(this.contactDetail?.address ?? ''),
+      description: new FormControl(this.contactDetail?.description),
     });
   }
 
   addContactDetail() {
     if (this.addContactForm.valid) {
       let contact = new Contact(this.addContactForm.value);
-      this.contactService.addContact(contact).subscribe(() => {
+      this.contactService.addContact(contact).subscribe((data) => {
         this.resetContactForm();
         this.closeModal();
-        this.onSave(true);
+        this.onSave(data);
+        this.notificationService.success('Success' ,'Contact added successfully');
+      }, (error) => {
+          this.notificationService.error('Error' ,'Failed to add contact');   
       });
     }
   }
@@ -67,7 +81,35 @@ export class ContactFormComponent implements OnInit {
           this.resetContactForm();
           this.closeModal();
           this.onSave(data);
-         });
+          this.notificationService.success('Success' ,'Contact updated successfully');
+      }, (error) => {
+          this.notificationService.error('Error' ,'Failed to update contact');   
+      });
+    }
+  }
+
+  isEmailUnique(control: AbstractControl) {
+    const value: string = control.value;
+    if (!value) {
+      return null;
+    }
+    else {
+      if(this.contactId) {
+        return (this.contactList.filter((contact: Contact) => contact.id != this.contactId)).findIndex((f: any) => f.email.trim().toLowerCase() === value.trim().toLowerCase()) > -1 ? { duplicate: true } : null;
+    }
+      return this.contactList.findIndex((contact: Contact) => contact.email.trim().toLowerCase() === value.trim().toLowerCase()) > -1 ? { duplicate: true } : null;
+    }
+  }
+
+  isPhoneNumberUnique(control: AbstractControl){
+    if (!control.value) {
+      return null;
+    }
+    else {
+      if(this.contactId) {
+        return (this.contactList.filter((contact: Contact) => contact.id != this.contactId)).findIndex((f: any) => f.mobile === control.value) > -1 ? { duplicate: true } : null;
+    }
+      return this.contactList.findIndex((contact: Contact) => contact.mobile === control.value) > -1 ? { duplicate: true } : null;
     }
   }
 
@@ -79,6 +121,5 @@ export class ContactFormComponent implements OnInit {
 
   closeModal() {
     this.modalRef.hide();
-    //this.router.navigate([`contact`]);
   }
 }

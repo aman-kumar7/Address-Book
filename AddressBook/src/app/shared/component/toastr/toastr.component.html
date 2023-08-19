@@ -1,0 +1,8 @@
+<div class="toastr-icon">
+    <span class="bi" [ngClass]="getIconClass()"></span>
+</div>
+<div class="toastr-details">
+    <div class="title"><h4>{{title}}!</h4></div>
+    <div class="message">{{message}}</div>
+    <a class="icon-click" (click)="remove()"><span class="bi bi-x-lg"></span></a>
+</div>

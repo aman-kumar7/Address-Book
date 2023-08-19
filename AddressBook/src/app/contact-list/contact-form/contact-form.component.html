@@ -1,54 +1,91 @@
 <div class="modal-header">
     <h5>{{ contactId ? 'Update' :'Add'}} Contact</h5>
-    <span class="bi bi-x-lg" (click)="closeModal()"></span>
+    <span class="bi bi-x-lg cursor-pointer" (click)="closeModal()"></span>
 </div>
 <div class="modal-body">
-        <form *ngIf="addContactForm" [formGroup]="addContactForm" name="addContactForm">       
-            <div class="form-group mb-3">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" formControlName="name"
-                    [ngClass]="{'is-invalid':addContactForm.get('name')?.touched && addContactForm.get('name')?.invalid}" />
-                <div class="invalid-feedback"  *ngIf="addContactForm.get('name')?.touched && addContactForm.get('name')?.invalid">
-                    <span *ngIf="addContactForm.get('name')?.errors?.required" class="error-message">Name is Required</span>
-                </div>
-    
-            </div>
-            <div class="form-group mb-3">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" formControlName="email"
-                    [ngClass]="{'is-invalid':addContactForm.get('email')?.touched && addContactForm.get('email')?.invalid}" />
-                <div *ngIf="addContactForm.get('email')?.touched && addContactForm.get('email')?.invalid"
-                    class="invalid-feedback">
-                    <span *ngIf="addContactForm.get('email')?.errors?.required" class="error-message">Email is
-                        Required</span>
-                    <span *ngIf="addContactForm.get('email')?.errors?.email" class="error-message">Email is not Valid</span>
-                </div>
-            </div>
-            <div class="d-flex mb-3">
-                <div class="form-group w-100 mr-20">
-                    <label for="mobile">Mobile</label>
-                    <input type="number" class="form-control" formControlName="mobile" [ngClass]="{'is-invalid':addContactForm.get('mobile')?.touched && addContactForm.get('mobile')?.invalid}" >
-                    <div *ngIf="addContactForm.get('mobile')?.touched && addContactForm.get('mobile')?.invalid" class="invalid-feedback">
-                      <span *ngIf="addContactForm.get('mobile')?.errors?.required" class="error-message">Mobile Number is Required</span>
-                      <span *ngIf="addContactForm.get('mobile')?.errors?.pattern?.requiredPattern" class="error-message">Mobile Number must be of 10 digit</span>
+    <form *ngIf="addContactForm" [formGroup]="addContactForm" name="addContactForm">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group mb-3">
+                    <label for="firstname">First name</label>
+                    <input type="text" class="form-control" formControlName="firstname"
+                        [ngClass]="{'is-invalid':addContactForm.get('firstname')?.touched && addContactForm.get('firstname')?.invalid}" />
+                    <div class="invalid-feedback"
+                        *ngIf="addContactForm.get('firstname')?.touched && addContactForm.get('firstname')?.invalid">
+                        <span *ngIf="addContactForm.get('firstname')?.errors?.required" class="error-message">First name
+                            is Required</span>
                     </div>
-                  </div>
-                <div class="form-group w-100">
-                    <label for="landline">Landline</label>
-                    <input type="number" class="form-control" formControlName="landline">
                 </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="website">Website</label>
-                <input type="url" class="form-control" formControlName="website" />
+            <div class="col-sm-6">
+                <div class="form-group mb-3">
+                    <label for="lastname">Last name</label>
+                    <input type="text" class="form-control" formControlName="lastname"
+                        [ngClass]="{'is-invalid':addContactForm.get('lastname')?.touched && addContactForm.get('lastname')?.invalid}" />
+                    <div class="invalid-feedback"
+                        *ngIf="addContactForm.get('lastname')?.touched && addContactForm.get('lastname')?.invalid">
+                        <span *ngIf="addContactForm.get('lastname')?.errors?.required" class="error-message">Last name
+                            is Required</span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="address">Address</label>
-                <textarea class="form-control" rows="3" formControlName="address"></textarea>
-            </div>    
-            <div class="d-flex justify-content-end">
-                <input *ngIf="!contactId" name="add" type="button" class="btn btn-success" (click)="addContactDetail()" [disabled]="!addContactForm.valid" value="Add">
-                <input *ngIf="contactId" name="save" type="button" class="btn btn-success" (click)="updateContactDetail()" [disabled]="!addContactForm.valid" value="Save">
+            <div class="col-sm-6">
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" formControlName="email"
+                        [ngClass]="{'is-invalid':addContactForm.get('email')?.touched && addContactForm.get('email')?.invalid}" />
+                    <div *ngIf="addContactForm.get('email')?.touched && addContactForm.get('email')?.invalid"
+                        class="invalid-feedback">
+                        <span *ngIf="addContactForm.get('email')?.errors?.required" class="error-message">Email is
+                            Required</span>
+                        <span *ngIf="addContactForm.get('email')?.errors?.email" class="error-message">Email is not
+                            Valid</span>
+                        <span *ngIf="addContactForm.get('email')?.errors?.duplicate" class="error-message">Email already
+                            exists</span>
+                    </div>
+                </div>
             </div>
-        </form>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input type="number" class="form-control" formControlName="mobile"
+                        [ngClass]="{'is-invalid':addContactForm.get('mobile')?.touched && addContactForm.get('mobile')?.invalid}">
+                    <div *ngIf="addContactForm.get('mobile')?.touched && addContactForm.get('mobile')?.invalid"
+                        class="invalid-feedback">
+                        <span *ngIf="addContactForm.get('mobile')?.errors?.required" class="error-message">Mobile number
+                            is
+                            Required</span>
+                        <span *ngIf="addContactForm.get('mobile')?.errors?.pattern?.requiredPattern"
+                            class="error-message">Mobile number must be of 10 digit</span>
+                        <span *ngIf="addContactForm.get('mobile')?.errors?.duplicate" class="error-message">Mobile
+                            number already exists</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group mb-3">
+                    <label for="website">Website</label>
+                    <input type="url" class="form-control" formControlName="website" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group mb-3">
+                    <label for="address">Address</label>
+                    <textarea class="form-control" rows="3" formControlName="address"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group mb-3">
+                    <label for="address">Description</label>
+                    <textarea class="form-control" rows="3" formControlName="description"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button *ngIf="!contactId" type="button" class="btn btn-success" (click)="addContactDetail()"
+                [disabled]="!addContactForm.valid">Add Contact</button>
+            <button *ngIf="contactId" type="button" class="btn btn-success" (click)="updateContactDetail()"
+                [disabled]="!addContactForm.valid">Update Contact</button>
+        </div>
+    </form>
 </div>

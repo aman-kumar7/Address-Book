@@ -11,13 +11,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactListComponent, ContactFormComponent, ContactDetailComponent } from './contact-list';
 import { ContactService } from './service';
+import { ToastrComponent } from './shared';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContactListComponent,
     ContactFormComponent,
-    ContactDetailComponent
+    ContactDetailComponent,
+    ToastrComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,19 @@ import { ContactService } from './service';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule, // required animations module
-    //ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      tapToDismiss: true,
+      easing: 'ease-in',
+      newestOnTop: true,
+      positionClass: 'toast-top-right',
+      toastComponent: ToastrComponent,
+      iconClasses: {
+          error: 'error',
+          info: 'info',
+          success: 'success',
+          warning: 'warning',
+      },
+  }),
   ],
   providers: [ContactService, BsModalService],
   bootstrap: [AppComponent]

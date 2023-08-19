@@ -7,6 +7,35 @@
     line-height: normal;
 }
 
+body {
+    font-family: $cali;  
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    overflow: visible;
+    background: 0 0;
+}
+
+::-webkit-scrollbar-corner {
+    background: #e4e6e9;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 6px!important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #a2a9b4;
+    background-clip: padding-box;
+    box-shadow: inset 0 0 0 1px #fff;
+}
+
+::-webkit-scrollbar-track-piece {
+    background: #f4f5f8;
+}
+
 a {
     @extend .text-decoration-none;
 }
@@ -44,6 +73,7 @@ a {
         top: 0;
         bottom: 0;
         margin-left: 8px;
+        cursor: default;
     }
 }
 
@@ -52,6 +82,10 @@ a {
 
     &:hover {
         color: $white;
+    }
+
+    &:active {
+        color: $white !important;
     }
 }
 
@@ -84,6 +118,10 @@ textarea {
 
 .ml-4{
     margin-left: 4px;
+}
+
+.h-300{
+    height: 300px;
 }
 
 .close {
@@ -124,17 +162,31 @@ textarea {
     }
 }
 
-.container {
-    width: fit-content;
-    font-family: $cali;
+.bi {
+    @extend .d-flex, .align-items-center, .justify-content-center;
+    color: $grey;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
 
-    .contact-list {
-        div {
-            color: $black-100;
 
-            &.active {
-                background-color: $hover;
-            }
+
+.contact-list {
+    @extend .overflow-y-auto;
+    height: 400px;
+
+    .contact-list-item {
+        color: $black-100;
+        @extend .border, .rounded, .p-3;
+        cursor: pointer; 
+
+        &.active {
+            background-color: $hover !important;
+        }
+
+        &:hover {
+            background-color: $grey-100;
         }
     }
 }
