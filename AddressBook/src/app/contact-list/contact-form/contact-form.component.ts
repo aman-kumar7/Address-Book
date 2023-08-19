@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef} from 'ngx-bootstrap/modal'
 
@@ -12,7 +12,7 @@ import { NotificationService } from 'src/app/shared';
   templateUrl: './contact-form.component.html',
 })
 export class ContactFormComponent implements OnInit {
-  addContactForm!: FormGroup;
+  addContactForm!: UntypedFormGroup;
   contactDetail!: Contact;
   public onSave: any;
   contactId!: number;
@@ -49,14 +49,14 @@ export class ContactFormComponent implements OnInit {
   }
 
   buildContactForm() {
-    this.addContactForm = new FormGroup({
-      firstname: new FormControl(this.contactDetail?.firstname ?? '', Validators.required),
-      lastname: new FormControl(this.contactDetail?.lastname ?? '', Validators.required),
-      email: new FormControl(this.contactDetail?.email ?? '', [Validators.required, Validators.email, this.isEmailUnique.bind(this)]),
-      mobile: new FormControl(this.contactDetail?.mobile ?? '', [Validators.required, Validators.pattern(/^[9876]\d{9}$/), this.isPhoneNumberUnique.bind(this)]),
-      website: new FormControl(this.contactDetail?.website ?? ''),
-      address: new FormControl(this.contactDetail?.address ?? ''),
-      description: new FormControl(this.contactDetail?.description),
+    this.addContactForm = new UntypedFormGroup({
+      firstname: new UntypedFormControl(this.contactDetail?.firstname ?? '', Validators.required),
+      lastname: new UntypedFormControl(this.contactDetail?.lastname ?? '', Validators.required),
+      email: new UntypedFormControl(this.contactDetail?.email ?? '', [Validators.required, Validators.email, this.isEmailUnique.bind(this)]),
+      mobile: new UntypedFormControl(this.contactDetail?.mobile ?? '', [Validators.required, Validators.pattern(/^[9876]\d{9}$/), this.isPhoneNumberUnique.bind(this)]),
+      website: new UntypedFormControl(this.contactDetail?.website ?? ''),
+      address: new UntypedFormControl(this.contactDetail?.address ?? ''),
+      description: new UntypedFormControl(this.contactDetail?.description),
     });
   }
 
