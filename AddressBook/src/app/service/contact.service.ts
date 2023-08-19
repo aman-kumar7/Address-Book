@@ -27,7 +27,7 @@ export class ContactService {
     this.contactFormSubmitted.next();    
   }
 
-  addContact(data: any) {    
+  addContact(data: any): Observable<any> {    
     return this.http.post(`${this.url}/contacts/`, data);
   }
  
@@ -35,7 +35,7 @@ export class ContactService {
     return this.http.get(`${this.url}/contacts/${id}`)
   }
 
-  deleteContact(id: number) {
+  deleteContact(id: number): Observable<any> {
     return this.http.delete(`${this.url}/contacts/${id}`)
   }
   
