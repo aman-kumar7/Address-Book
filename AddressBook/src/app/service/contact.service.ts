@@ -8,7 +8,7 @@ import { Contact } from '../model';
   providedIn: 'root'
 })
 export class ContactService {
-  url = 'https://my-json-server.typicode.com/aman-kumar7/addressbook-json';
+  url = 'https://address-book-server-cwsd.onrender.com';
 
   private contactFormSubmitted = new Subject<any>();
   isContactListChanged = this.contactFormSubmitted.asObservable();

@@ -1,6 +1,6 @@
 {
   "name": "address-book",
-  "home": "https://my-json-server.typicode.com/aman-kumar7/addressbook-json",
+  "home": "https://address-book-server-cwsd.onrender.com/",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
