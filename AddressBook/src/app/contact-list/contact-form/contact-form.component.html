@@ -42,6 +42,7 @@
                             Valid</span>
                         <span *ngIf="addContactForm.get('email')?.errors?.duplicate" class="error-message">Email already
                             exists</span>
+                            <span *ngIf="addContactForm.get('email')?.errors?.deliverable" class="error-message">Email not deliverable</span>
                     </div>
                 </div>
             </div>

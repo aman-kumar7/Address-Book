@@ -9,6 +9,8 @@ import { Contact } from '../model';
 })
 export class ContactService {
   url = 'https://address-book-server-cwsd.onrender.com';
+  emailUrl = 'https://emailvalidation.abstractapi.com/v1/';
+  apikey='2a7431d3fcc6419486df333b226b81a7'
 
   private contactFormSubmitted = new Subject<any>();
   isContactListChanged = this.contactFormSubmitted.asObservable();
@@ -41,5 +43,10 @@ export class ContactService {
   
   updateContact(id: number, data: Contact) {
     return this.http.put(`${this.url}/contacts/${id}`, data)
+  }
+
+  verifyEmail(emailValue: string) {
+    let params = {api_key: this.apikey, email: emailValue};
+    return this.http.get(this.emailUrl,{params: params})
   }
 }

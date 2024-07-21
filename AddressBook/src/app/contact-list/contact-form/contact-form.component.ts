@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef} from 'ngx-bootstrap/modal'
 
 import { ContactService } from '../../service';
 import { Contact } from '../../model';
 import { NotificationService } from '../../shared';
+import { Observable, of } from 'rxjs';
+import {catchError, map} from 'rxjs/operators'
 
 @Component({
   selector: 'app-contact-form',
@@ -37,6 +39,7 @@ export class ContactFormComponent implements OnInit {
     //   });
     // }
     //else {
+ 
       this.getContactList();      
     //}
   }
@@ -45,6 +48,7 @@ export class ContactFormComponent implements OnInit {
     this.contactService.getContactList().subscribe(result => {
       this.contactList = result;
       this.buildContactForm();
+      
   });
   }
 
@@ -52,7 +56,7 @@ export class ContactFormComponent implements OnInit {
     this.addContactForm = new UntypedFormGroup({
       firstname: new UntypedFormControl(this.contactDetail?.firstname ?? '', Validators.required),
       lastname: new UntypedFormControl(this.contactDetail?.lastname ?? '', Validators.required),
-      email: new UntypedFormControl(this.contactDetail?.email ?? '', [Validators.required, Validators.email, this.isEmailUnique.bind(this)]),
+      email: new UntypedFormControl(this.contactDetail?.email ?? '', [Validators.required, Validators.email, this.isEmailUnique.bind(this)],[this.emailValidator()]),
       mobile: new UntypedFormControl(this.contactDetail?.mobile ?? '', [Validators.required, Validators.pattern(/^[9876]\d{9}$/), this.isPhoneNumberUnique.bind(this)]),
       website: new UntypedFormControl(this.contactDetail?.website ?? ''),
       address: new UntypedFormControl(this.contactDetail?.address ?? ''),
@@ -99,6 +103,19 @@ export class ContactFormComponent implements OnInit {
     }
       return this.contactList.findIndex((contact: Contact) => contact.email.trim().toLowerCase() === value.trim().toLowerCase()) > -1 ? { duplicate: true } : null;
     }
+  }
+
+  emailValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return this.contactService.verifyEmail(control.value).pipe(
+        map((response: any) => {
+          const isDeliverable = response.deliverability === 'DELIVERABLE';
+          const isValidFormat = response.is_valid_format.value;
+          return isDeliverable && isValidFormat ? null : { deliverable: true };
+        }),
+        catchError(() => of({ email: true }))
+      );
+    };
   }
 
   isPhoneNumberUnique(control: AbstractControl){
