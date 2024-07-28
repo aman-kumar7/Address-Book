@@ -3,11 +3,13 @@ import { AbstractControl, AsyncValidatorFn, UntypedFormControl, UntypedFormGroup
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef} from 'ngx-bootstrap/modal'
 
-import { ContactService } from '../../service';
-import { Contact } from '../../model';
+import { ContactService } from '../../shared';
+
+import { Contact } from '../../shared/model';
 import { NotificationService } from '../../shared';
 import { Observable, of } from 'rxjs';
 import {catchError, map} from 'rxjs/operators'
+import { AuthService } from 'app/shared/service/auth.service';
 
 @Component({
   selector: 'app-contact-form',
@@ -24,7 +26,8 @@ export class ContactFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute, 
     private router: Router,
     private modalRef: BsModalRef,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
     ) {
   }
 
@@ -107,7 +110,7 @@ export class ContactFormComponent implements OnInit {
 
   emailValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.contactService.verifyEmail(control.value).pipe(
+      return this.authService.verifyEmail(control.value).pipe(
         map((response: any) => {
           const isDeliverable = response.deliverability === 'DELIVERABLE';
           const isValidFormat = response.is_valid_format.value;

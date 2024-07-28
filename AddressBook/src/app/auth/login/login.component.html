@@ -1,0 +1,24 @@
+  <div class="h-100-72 flex items-center justify-center bg-gray-100">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+      <h2 class="text-2xl font-bold mb-6 text-gray-800">Login</h2>
+      <form [formGroup]="loginForm">
+        <div class="mb-4">
+          <label for="email" class="block text-gray-700">Email:</label>
+          <input id="email" type="email" formControlName="email" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" />
+          <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)" class="text-red-600 mt-1">
+            <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+            <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email address.</small>
+          </div>
+        </div>
+  
+        <div class="mb-6">
+          <label for="password" class="block text-gray-700">Password:</label>
+          <input id="password" type="password" formControlName="password" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" />
+          <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="text-red-600 mt-1">
+            <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+          </div>
+        </div>  
+        <button type="submit" class="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring focus:ring-blue-200" [disabled]="loginForm.invalid" (click)="onSubmitLoginForm()">Login</button>
+      </form>
+    </div>
+  </div>

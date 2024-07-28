@@ -10,16 +10,30 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactListComponent, ContactFormComponent, ContactDetailComponent } from './contact-list';
-import { ContactService } from './service';
-import { ToastrComponent } from './shared';
+import { ToastrComponent, ContactService, PostService } from './shared';
+import { PostComponent } from './posts/post.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthService } from './shared/service/auth.service';
+import { TopnavComponent } from './layout/topnav/topnav.component';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PostComponent,
     ContactListComponent,
     ContactFormComponent,
     ContactDetailComponent,
     ToastrComponent,
+    LoginComponent,
+    SignupComponent,
+    TopnavComponent,
+    HomeComponent,
+    ProfileComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +55,7 @@ import { ToastrComponent } from './shared';
       },
   }),
   ],
-  providers: [ContactService, BsModalService],
+  providers: [ContactService,PostService, BsModalService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

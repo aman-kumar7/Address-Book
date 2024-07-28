@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
-import { ContactService } from '../service';
-import { Contact } from '../model';
+import { ContactService } from '../shared';
+import { Contact } from '../shared/model';
 import { ContactFormComponent } from './contact-form'
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../shared';

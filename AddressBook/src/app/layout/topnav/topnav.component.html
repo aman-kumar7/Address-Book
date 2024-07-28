@@ -1,0 +1,28 @@
+  <nav class="bg-gray-900 text-white p-3 fixed top-0 w-full">
+    <div class="mx-3 flex justify-between items-center h-[40px]">
+      <!-- Left Side -->
+      <div class="flex space-x-4">
+        <a routerLinkActive="active" routerLink="home" class="hover:text-gray-400">Home</a>
+        <a routerLinkActive="active" *ngIf="user?.isAuthenticated" routerLink="contact" class="hover:text-gray-400">Contacts</a>
+        <a routerLinkActive="active" *ngIf="false" routerLink="post" class="hover:text-gray-400">Post</a>
+      </div>
+      
+      <!-- Right Side -->
+      <div class="flex items-center space-x-4">
+        <!-- Login Link -->
+        <a routerLink="login" *ngIf="!user?.isAuthenticated" class="hover:text-gray-400">Login</a>
+        <a routerLink="signup" *ngIf="!user?.isAuthenticated" class="hover:text-gray-400">Signup</a>
+
+        <!-- User Profile Dropdown -->
+        <div class="relative dropdown" *ngIf="user?.isAuthenticated">
+          <button class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-700 text-white hover:bg-gray-600">
+            <span class="text-xl font-semibold">U</span>
+          </button>
+          <div class="dropdown-content">
+            <!-- <a href="#">Profile</a> -->
+            <a (click)="logoutUser()">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,93 @@
+<div class="flex align-items-center h-100-72">
+  <form class="max-w-lg min-w-500 mx-auto p-3 bg-white border border-gray-200 rounded-lg shadow-md" [formGroup]="signUpForm">
+    <!-- First Name -->
+    <div class="mb-4">
+      <label for="firstname" class="block text-sm font-medium text-gray-700">First Name</label>
+      <input id="firstname" formControlName="firstname" type="text"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          [ngClass]="{'border-red-500': signUpForm.get('firstname')?.touched && signUpForm.get('firstname')?.invalid}"
+        />
+      <div *ngIf="signUpForm.get('firstname')?.touched && signUpForm.get('firstname')?.invalid"
+        class="mt-2 text-red-600 text-sm">
+        <span *ngIf="signUpForm.get('firstname')?.errors?.required">First name is required</span>
+      </div>
+    </div>
+  
+    <!-- Last Name -->
+    <div class="mb-4">
+      <label for="lastname" class="flex text-sm font-medium text-gray-700">Last Name</label>
+      <input id="lastname" formControlName="lastname" type="text"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          [ngClass]="{'border-red-500': signUpForm.get('lastname')?.touched && signUpForm.get('lastname')?.invalid}"
+        />
+      <div *ngIf="signUpForm.get('lastname')?.touched && signUpForm.get('lastname')?.invalid"
+        class="mt-2 text-red-600 text-sm">
+        <span *ngIf="signUpForm.get('lastname')?.errors?.required">Last name is required</span>
+      </div>
+    </div>
+  
+    <!-- Email -->
+    <div class="mb-4">
+      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+      <input id="email" formControlName="email" type="email"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          [ngClass]="{'border-red-500': signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid}"
+        />
+      <div *ngIf="signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid"
+        class="mt-2 text-red-600 text-sm">
+        <span *ngIf="signUpForm.get('email')?.errors?.required">Email is required</span>
+        <span *ngIf="signUpForm.get('email')?.errors?.email">Email is not valid</span>
+      </div>
+    </div>
+  
+    <!-- Phone Number -->
+    <div class="mb-4">
+      <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+      <input id="phone" formControlName="phone" type="tel"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          [ngClass]="{'border-red-500': signUpForm.get('phone')?.touched && signUpForm.get('phone')?.invalid}"
+        />
+      <div *ngIf="signUpForm.get('phone')?.touched && signUpForm.get('phone')?.invalid"
+        class="mt-2 text-red-600 text-sm">
+        <span *ngIf="signUpForm.get('phone')?.errors?.required">Phone number is required</span>
+        <span *ngIf="signUpForm.get('phone')?.errors?.pattern">Phone number must be valid</span>
+      </div>
+    </div>
+  
+    <!-- Password -->
+    <div class="mb-4">
+      <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+      <input id="password" formControlName="password" type="password"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          [ngClass]="{'border-red-500': signUpForm.get('password')?.touched && signUpForm.get('password')?.invalid}"
+        />
+      <div *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.invalid"
+        class="mt-2 text-red-600 text-sm">
+        <span *ngIf="signUpForm.get('password')?.errors?.required">Password is required</span>
+        <span *ngIf="signUpForm.get('password')?.errors?.minlength">Password must be at least 7 characters</span>
+      </div>
+    </div>
+  
+    <!-- Confirm Password -->
+    <div class="mb-4">
+      <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+      <input id="confirmPassword" formControlName="confirmPassword" type="password"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          [ngClass]="{'border-red-500': signUpForm.get('confirmPassword')?.touched && signUpForm.get('confirmPassword')?.invalid}"
+        />
+      <div *ngIf="signUpForm.get('confirmPassword')?.touched && signUpForm.get('confirmPassword')?.invalid"
+        class="mt-2 text-red-600 text-sm">
+        <span *ngIf="signUpForm.get('confirmPassword')?.errors?.required">Confirm Password is required</span>
+        <span *ngIf="signUpForm.get('confirmPassword')?.errors?.mustMatch">Passwords must match</span>
+      </div>
+    </div>
+  
+    <!-- Submit Button -->
+    <div class="flex justify-end">
+      <button type="submit"
+        class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        [disabled]="!signUpForm.valid" (click)="onSubmitSignUpForm()">Sign Up</button>
+    </div>
+  </form>
+  
+</div>

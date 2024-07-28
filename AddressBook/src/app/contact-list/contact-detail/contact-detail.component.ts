@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ContactService } from '../../service';
-import { Contact } from '../../model';
+import { ContactService } from '../../shared';
+
+import { Contact } from '../../shared/model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -38,7 +39,7 @@ export class ContactDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.suscription.unsubscribe();
+        //this.suscription.unsubscribe();
     }
 
 }
